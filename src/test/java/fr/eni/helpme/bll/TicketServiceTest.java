@@ -1,8 +1,10 @@
 package fr.eni.helpme.bll;
 
+import fr.eni.helpme.bo.Cours;
 import fr.eni.helpme.bo.Reponse;
 import fr.eni.helpme.bo.Ticket;
 import fr.eni.helpme.dal.TicketRepository;
+import fr.eni.helpme.dto.CoursDTO;
 import fr.eni.helpme.dto.ReponseDTO;
 import fr.eni.helpme.dto.TicketDTO;
 import org.junit.jupiter.api.Assertions;
@@ -17,6 +19,9 @@ public class TicketServiceTest {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private CoursService coursService;
 
     @Autowired ReponseService reponseService;
 
@@ -33,10 +38,13 @@ public class TicketServiceTest {
     public void testAjoutTicket() {
 
         // Arrange
+        CoursDTO coursDTO = new CoursDTO("test","test");
         TicketDTO ticketDTO = new TicketDTO("test1", "this is fine *tout brûle*");
 
         // Act
-        Ticket ticket = ticketService.ajoutTicket(ticketDTO);
+        //Ticket ticket = ticketService.ajoutTicket(ticketDTO);
+        Cours cours = coursService.ajoutCours(coursDTO);
+        Ticket ticket = ticketService.ajoutTicket(cours.getId(),ticketDTO);
 
         // Assert
         Assertions.assertNotNull(ticket.getId(), "L'id doit être généré");
@@ -50,11 +58,14 @@ public class TicketServiceTest {
     @DisplayName("Test ajout reponse a un ticket")
     public void testAjoutReponseTicket() {
         // Arrange
+        CoursDTO coursDTO = new CoursDTO("test","test");
         TicketDTO ticketDTO = new TicketDTO("test1", "this is fine *tout brûle*");
         ReponseDTO reponseDTO= new ReponseDTO("test","testteeee");
 
+        Cours cours = coursService.ajoutCours(coursDTO);
+        Ticket ticket = ticketService.ajoutTicket(cours.getId(),ticketDTO);
         // Act
-        Ticket ticket = ticketService.ajoutTicket(ticketDTO);
+        //Ticket ticket = ticketService.ajoutTicket(ticketDTO);
         Reponse reponse = reponseService.ajoutReponse(ticket.getId(),reponseDTO);
 
         //Assert

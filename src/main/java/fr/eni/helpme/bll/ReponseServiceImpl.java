@@ -13,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -39,4 +40,13 @@ public class ReponseServiceImpl implements ReponseService{
         ticketRepository.save(ticket);
         return reponse;
     }
+
+    @Override
+    public List<Reponse> getAllReponses(String id) {
+        Ticket ticket=ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket introuvable"));
+
+        List<Reponse> reponses = ticket.getReponses();
+        return reponses;
+    }
+
 }

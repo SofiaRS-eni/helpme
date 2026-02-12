@@ -27,6 +27,8 @@ public class Ticket {
 
     private List<Reponse> reponses;
 
+    private Cours cours;
+
     private Etat etat;
 
     public Ticket(@NonNull String auteur, @NonNull String message) {

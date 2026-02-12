@@ -6,6 +6,6 @@ import fr.eni.helpme.dto.TicketDTO;
 import java.util.List;
 
 public interface TicketService {
-    public Ticket ajoutTicket(TicketDTO ticketDTO);
+    Ticket ajoutTicket(String coursid,TicketDTO ticketDTO);
     List<Ticket> getAllTickets();
 }

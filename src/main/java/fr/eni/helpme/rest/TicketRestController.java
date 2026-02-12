@@ -26,6 +26,7 @@ public class TicketRestController {
         this.reponseService = reponseService;
     }
 
+    //Liste des tickets
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<Ticket> getAllTickets()
@@ -34,21 +35,32 @@ public class TicketRestController {
         return tickets;
     }
 
-    @PostMapping
-    public ResponseEntity<Ticket> ajoutTicket(@Valid @RequestBody TicketDTO ticketDTO, BindingResult bindingResult)
+    //Ajout des tickets
+    /*@PostMapping("/{id}/ticket")
+    public ResponseEntity<Ticket> ajoutTicket(@PathVariable String id, @Valid @RequestBody TicketDTO ticketDTO, BindingResult bindingResult)
     {
         if(bindingResult.hasErrors())
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        Ticket ajoutTicket = ticketService.ajoutTicket(ticketDTO);
+        Ticket ajoutTicket = ticketService.ajoutTicket(id,ticketDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(ajoutTicket);
-    }
+    }*/
 
+
+    //Update d'un ticket en ajoutant des reponses
     @PatchMapping("/{id}/reponses")
     public ResponseEntity<Reponse> ajoutReponse(@PathVariable String id, @Valid @RequestBody ReponseDTO reponseDTO)
     {
         Reponse reponse = reponseService.ajoutReponse(id,reponseDTO);
         return ResponseEntity.ok(reponse);
+    }
+
+    //List des reponses par rapport a un ticket
+    @GetMapping("/{id}/reponses")
+    public ResponseEntity<List<Reponse>> getReponses(@PathVariable String id)
+    {
+        List<Reponse> reponses = reponseService.getAllReponses(id);
+        return ResponseEntity.ok(reponses);
     }
 }
